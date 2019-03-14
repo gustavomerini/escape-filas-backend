@@ -1,13 +1,29 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const expressGraphQL =  require("express-graphql");
+const mongoose =  require("mongoose");
+const bodyParser =  require("body-parser");
+const cors =  require("cors");
 
-var app = express();
+const app = express();
+const db = `mongodb+srv://ademir:ademir@escape-filas-irwow.gcp.mongodb.net/test?retryWrites=true`
+import schema from "./graphql/";
+
+// Connect to MongoDB with Mongoose.
+mongoose
+  .connect(
+    db,
+    {
+      useCreateIndex: true,
+      useNewUrlParser: true
+    }
+  )
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,8 +35,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+app.use(
+  "/graphql",
+  cors(),
+  bodyParser.json(),
+  expressGraphQL({
+    schema,
+    graphiql: true
+  })
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

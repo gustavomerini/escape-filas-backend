@@ -1,4 +1,6 @@
 // The User schema.
+// Nesse arquivo, definimos os metodos que a nossa estrutura User terá, aqui podemos dar um getUser, deleteUser, list, add
+// um CRUDL completo.
 import User from "../../../models/User";
 
 export default {

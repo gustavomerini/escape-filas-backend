@@ -4,10 +4,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const expressGraphQL =  require("express-graphql");
-const mongoose =  require("mongoose");
-const bodyParser =  require("body-parser");
-const cors =  require("cors");
+const expressGraphQL = require("express-graphql");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const lineRoutes = require("./routes/line");
+const admin = require('firebase-admin');
 
 const app = express();
 const db = `mongodb+srv://ademir:ademir@escape-filas-irwow.gcp.mongodb.net/test?retryWrites=true`
@@ -34,7 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/line', lineRoutes);
 
 app.use(
   "/graphql",
@@ -47,12 +49,12 @@ app.use(
 );
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

@@ -1,20 +1,20 @@
-// The User schema.
-// Nesse arquivo, definimos os metodos que a nossa estrutura User terá, aqui podemos dar um getUser, deleteUser, list, add
+// The Report schema.
+// Nesse arquivo, definimos os metodos que a nossa estrutura Report terá, aqui podemos dar um getReport, deleteReport, list, add
 // um CRUDL completo.
-import User from "../../../models/User";
+import Report from "../../../models/Report";
 
 export default {
   Query: {
-    user: (root, args) => {
+    report: (root, args) => {
       return new Promise((resolve, reject) => {
-        User.findOne(args).exec((err, res) => {
+        Report.findOne(args).exec((err, res) => {
           err ? reject(err) : resolve(res);
         });
       });
     },
-    users: () => {
+    reports: () => {
       return new Promise((resolve, reject) => {
-        User.find({})
+        Report.find({})
           .populate()
           .exec((err, res) => {
             err ? reject(err) : resolve(res);
@@ -23,27 +23,27 @@ export default {
     }
   },
   Mutation: {
-    addUser: (root, { id, name, email }) => {
-      const newUser = new User({ id, name, email });
+    addReport: (root, { id, name, placeId }) => {
+      const newReport = new Report({ id, name, placeId });
 
       return new Promise((resolve, reject) => {
-        newUser.save((err, res) => {
+        newReport.save((err, res) => {
           err ? reject(err) : resolve(res);
         });
       });
     },
-    editUser: (root, { id, name, email }) => {
+    editReport: (root, { id, name, placeId }) => {
       return new Promise((resolve, reject) => {
-        User.findOneAndUpdate({ id }, { $set: { name, email } }).exec(
+        Report.findOneAndUpdate({ id }, { $set: { name, placeId } }).exec(
           (err, res) => {
             err ? reject(err) : resolve(res);
           }
         );
       });
     },
-    deleteUser: (root, args) => {
+    deleteReport: (root, args) => {
       return new Promise((resolve, reject) => {
-        User.findOneAndRemove(args).exec((err, res) => {
+        Report.findOneAndRemove(args).exec((err, res) => {
           err ? reject(err) : resolve(res);
         });
       });

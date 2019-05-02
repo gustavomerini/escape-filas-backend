@@ -8,7 +8,6 @@ const expressGraphQL = require("express-graphql");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const lineRoutes = require("./routes/line");
 const admin = require('firebase-admin');
 
 const app = express();
@@ -36,7 +35,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/line', lineRoutes);
 
 app.use(
   "/graphql",

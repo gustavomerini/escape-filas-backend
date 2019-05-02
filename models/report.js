@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-// Create the User Schema.
-const UserSchema = new Schema({
+// Create the Report Schema.
+const ReportSchema = new Schema({
   id: {
     type: String,
     required: true,
@@ -13,12 +13,12 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  email: {
+  placeId: {
     type: String,
     required: true
   }
 });
 
-const User = mongoose.model("User", UserSchema);
+const Report = mongoose.model("Report", ReportSchema);
 
-export default User;
+export default Report;

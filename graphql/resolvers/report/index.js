@@ -21,8 +21,8 @@ export default {
     }
   },
   Mutation: {
-    addReport: (root, { id, name, placeId }) => {
-      const newReport = new Report({ id, name, placeId });
+    addReport: (root, { name, placeId }) => {
+      const newReport = new Report({ name, placeId });
 
       return new Promise((resolve, reject) => {
         newReport.save((err, res) => {

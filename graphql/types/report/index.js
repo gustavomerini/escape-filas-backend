@@ -1,6 +1,6 @@
 export default `
   type Report {
-    id: String!
+    id: String
     name: String!
     placeId: String!
   }
@@ -9,8 +9,8 @@ export default `
     reports: [Report]
   }
   type Mutation {
-    addReport(id: String!, name: String!, placeId: String!): Report
-    editReport(id: String, name: String, placeId: String): Report
-    deleteReport(id: String, name: String, placeId: String): Report
+    addReport(name: String!, placeId: String!): Report
+    editReport(id: String!, name: String, placeId: String): Report
+    deleteReport(id: String!, name: String, placeId: String): Report
   }
 `;

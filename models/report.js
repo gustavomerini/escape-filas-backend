@@ -5,9 +5,11 @@ const Schema = mongoose.Schema;
 // Create the Report Schema.
 const ReportSchema = new Schema({
   id: {
-    type: String,
-    required: true,
-    unique: true
+    type: mongoose.Schema.Types.ObjectId,
+    auto: true,
+    index: true,
+    unique: true,
+    required: true
   },
   name: {
     type: String,

@@ -12,5 +12,6 @@ export default `
     addReport(name: String!, placeId: String!): Report
     editReport(id: String!, name: String, placeId: String): Report
     deleteReport(id: String!, name: String, placeId: String): Report
+    addReportLocation(lat: String!, lng: String!): Report
   }
 `;

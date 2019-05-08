@@ -47,17 +47,21 @@ export default {
       });
     },
     addReportLocation: async (root, { lat, lng }) => {
-      try {
-        let places = await maps.searchPlaces(lat, lng);
-        console.dir(places);
-      } catch (error) {
-        console.error(error)        
-      }
-      const newReport = new Report({ lat, lng });
-      return new Promise((resolve, reject) => {
-        newReport.save((err, res) => {
-          err ? reject(err) : resolve(res);
-        });
+      return new Promise(async (resolve, reject) => {
+        try {
+          let places = (await maps.searchPlaces(lat, lng)).json.results;
+          if (places.length === 0) {
+            reject("Zero Results")
+          }
+          let place = places[0];
+          console.log(place);
+          const newReport = new Report({ name: place.name, placeId: place.place_id });
+          newReport.save((err, res) => {
+            err ? reject(err) : resolve(res);
+          });
+        } catch (error) {
+          reject(error);
+        }
       });
     }
   }

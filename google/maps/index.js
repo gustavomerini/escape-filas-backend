@@ -7,6 +7,6 @@ const googleMapsClient = googleMaps.createClient({
 
 export default {
     searchPlaces: async (lat, lng) => {
-        return googleMapsClient.placesNearby({location: `${lat},${lng}` }).asPromise();
+        return googleMapsClient.placesNearby({ location: `${lat},${lng}`, rankby: 'distance',  type: 'establishment' }).asPromise();
     }
 }

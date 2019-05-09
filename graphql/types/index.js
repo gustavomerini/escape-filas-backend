@@ -1,7 +1,7 @@
 
 import { mergeTypes } from "merge-graphql-schemas";
 
-import Report from "./Report/";
+import Report from "./report/";
 
 const typeDefs = [Report];
 

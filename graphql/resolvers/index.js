@@ -1,6 +1,6 @@
 import { mergeResolvers } from "merge-graphql-schemas";
 
-import Report from "./Report/";
+import Report from "./report/";
 
 const resolvers = [Report];
 

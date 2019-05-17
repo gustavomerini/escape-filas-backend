@@ -22,17 +22,17 @@ export default {
     }
   },
   Mutation: {
-    addReport: (root, { name, placeId }) => {
-      const newReport = new Report({ name, placeId });
+    addReport: (root, { uid, name, placeId }) => {
+      const newReport = new Report({ uid, name, placeId });
       return new Promise((resolve, reject) => {
         newReport.save((err, res) => {
           err ? reject(err) : resolve(res);
         });
       });
     },
-    editReport: (root, { id, name, placeId }) => {
+    editReport: (root, { uid, name, placeId }) => {
       return new Promise((resolve, reject) => {
-        Report.findOneAndUpdate({ id }, { $set: { name, placeId } }).exec(
+        Report.findOneAndUpdate({ uid }, { $set: { name, placeId } }).exec(
           (err, res) => {
             err ? reject(err) : resolve(res);
           }
@@ -46,7 +46,7 @@ export default {
         });
       });
     },
-    addReportLocation: async (root, { lat, lng }) => {
+    addReportLocation: async (root, { uid, lat, lng }) => { 
       return new Promise(async (resolve, reject) => {
         try {
           let places = (await maps.searchPlaces(lat, lng)).json.results;
@@ -54,8 +54,8 @@ export default {
             reject("Zero Results")
           }
           let place = places[0];
-          console.log(place);
-          const newReport = new Report({ name: place.name, placeId: place.place_id });
+          const newReport = new Report({ uid, name: place.name, placeId: place.place_id });
+          console.log(newReport)
           newReport.save((err, res) => {
             err ? reject(err) : resolve(res);
           });
@@ -63,6 +63,17 @@ export default {
           reject(error);
         }
       });
+    },
+    deleteAll: async (root, args) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          Report.remove(args, (err, res) => {
+            err ? reject(err) : resolve(res);
+          })
+        } catch (error) {
+          reject(error);
+        }
+      })
     }
   }
 };

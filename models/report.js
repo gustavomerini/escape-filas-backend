@@ -11,6 +11,11 @@ const ReportSchema = new Schema({
     unique: true,
     required: true
   },
+  uid: {
+    type: String,
+    unique: true,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -18,6 +23,12 @@ const ReportSchema = new Schema({
   placeId: {
     type: String,
     required: true
+  },
+  lastModifiedDate: {
+    type: Date,
+    required: true,
+    expires: '5m',
+    default: Date.now
   }
 });
 

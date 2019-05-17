@@ -1,17 +1,18 @@
 export default `
   type Report {
-    id: String
+    uid: String!
     name: String!
     placeId: String!
   }
   type Query {
-    report(id: String!): Report
+    report(uid: String!): Report
     reports: [Report]
   }
   type Mutation {
-    addReport(name: String!, placeId: String!): Report
-    editReport(id: String!, name: String, placeId: String): Report
-    deleteReport(id: String!, name: String, placeId: String): Report
-    addReportLocation(lat: String!, lng: String!): Report
+    addReport(uid: String!, name: String!, placeId: String!): Report
+    editReport(uid: String!, name: String, placeId: String): Report
+    deleteReport(uid: String!, name: String, placeId: String): Report
+    addReportLocation(uid: String!, lat: String!, lng: String!): Report
+    deleteAll: [Report]
   }
 `;

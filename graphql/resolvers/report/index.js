@@ -22,17 +22,17 @@ export default {
     }
   },
   Mutation: {
-    addReport: (root, { uid, name, placeId }) => {
-      const newReport = new Report({ uid, name, placeId });
+    addReport: (root, { name, placeId, quantity }) => {
+      const newReport = new Report({ name, placeId, quantity });
       return new Promise((resolve, reject) => {
         newReport.save((err, res) => {
           err ? reject(err) : resolve(res);
         });
       });
     },
-    editReport: (root, { uid, name, placeId }) => {
+    editReport: (root, { id, name, placeId, uid, quantity }) => {
       return new Promise((resolve, reject) => {
-        Report.findOneAndUpdate({ uid }, { $set: { name, placeId } }).exec(
+        Report.findOneAndUpdate({ id }, { $set: { name, placeId, uid, quantity } }).exec(
           (err, res) => {
             err ? reject(err) : resolve(res);
           }
@@ -46,7 +46,7 @@ export default {
         });
       });
     },
-    addReportLocation: async (root, { uid, lat, lng }) => { 
+    addReportLocation: async (root, { uid, lat, lng }) => {
       return new Promise(async (resolve, reject) => {
         try {
           let places = (await maps.searchPlaces(lat, lng)).json.results;
@@ -55,9 +55,13 @@ export default {
           }
           let place = places[0];
           const newReport = new Report({ uid, name: place.name, placeId: place.place_id });
-          console.log(newReport)
-          newReport.save((err, res) => {
-            err ? reject(err) : resolve(res);
+          Report.findOneAndDelete({ uid }, (err, res) => {
+            if (err) reject(err);
+            else {
+              newReport.save((err_, res_) => {
+                err_ ? reject(err_) : resolve(res_);
+              });
+            }
           });
         } catch (error) {
           reject(error);

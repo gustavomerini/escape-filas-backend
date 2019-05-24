@@ -13,8 +13,7 @@ const ReportSchema = new Schema({
   },
   uid: {
     type: String,
-    unique: true,
-    required: true
+    default: null,
   },
   name: {
     type: String,
@@ -29,9 +28,16 @@ const ReportSchema = new Schema({
     required: true,
     expires: '5m',
     default: Date.now
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1
   }
 });
 
 const Report = mongoose.model("Report", ReportSchema);
+
+Report.syncIndexes();
 
 export default Report;

@@ -7,7 +7,7 @@
 
 Abaixo alguns exemplos de requisição:
 
-#### Coletar filas
+#### Coletar reports de filas
 `{ "query": "{ reports { id name placeId } }"}`
 
 #### Reportar filas
@@ -23,3 +23,11 @@ Há duas formas de enviar o report de fila
 
 `{ "query": "mutation { addReportLocation (lat:\"-26.9063448\", lng:\"-49.0770172\") {id name placeId } }"
 }`
+
+### Coletar filas agrupadas por reports
+`{ "query": "{ placeLines { placeId quantity placeName } }" }
+`
+
+### Coletar fila agrupada por report
+`{ "query": "{ placeLine(placeId: \"Id do lugar\") { placeId quantity placeName } }" }
+`

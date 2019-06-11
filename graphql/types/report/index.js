@@ -14,8 +14,6 @@ export default `
   type Query {
     report(uid: String!): Report
     reports: [Report]
-    placeLines: [PlaceLine]
-    placeLine(placeId: String!): PlaceLine
   }
   type Mutation {
     addReport(name: String!, placeId: String!, quantity: Int!): Report

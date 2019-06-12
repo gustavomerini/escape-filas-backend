@@ -26,7 +26,7 @@ const ReportSchema = new Schema({
   lastModifiedDate: {
     type: Date,
     required: true,
-    expires: '5m',
+    expires: '1h',
     default: Date.now
   },
   quantity: {

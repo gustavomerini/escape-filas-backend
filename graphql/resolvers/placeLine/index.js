@@ -1,5 +1,6 @@
 // The Report schema.
 import Report from "../../../models/report";
+import maps from "../../../google/maps";
 
 export default {
   Query: {
@@ -16,19 +17,30 @@ export default {
     },
     placeLine: (root, args) => {
       return new Promise((resolve, reject) => {
-        Report.find(args).exec((err, res) => {
+        Report.findOne(args).exec((err, res) => {
           if (err) reject(err);
           else {
             resolve(getPlaceLine(res));
           }
         })
       })
+    },
+    placeLinesRadius: async (root, args) => {
+      try {
+        let places = (await maps.searchPlaces(args)).json.results;
+        if (places.length === 0)
+          throw new Error("Zero Results")
+        let reports = await Report.find({ placeId: { $in: places.map(p => p.place_id) } }).exec();
+        let groupedReports = groupBy(reports, report => report.placeId);
+        return groupedReports.map(g => getPlaceLine(g.arr));
+      } catch (error) {
+        throw new Error(error.stack)
+      }
     }
   }
 };
 
 let getPlaceLine = (res) => {
-  console.log(res);
   if (res.length === 0) return res;
   else {
     return res.reduce((placeLine, report) => {

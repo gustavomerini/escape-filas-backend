@@ -6,7 +6,20 @@ const googleMapsClient = googleMaps.createClient({
 });
 
 export default {
-    searchPlaces: async (lat, lng) => {
-        return googleMapsClient.placesNearby({ location: `${lat},${lng}`, rankby: 'distance',  type: 'establishment' }).asPromise();
+    /**
+     * @param {{
+     *      lat: String,
+     *      lng: String,
+     *      radius?: Number
+     * }} options
+     */
+    searchPlaces: async (options) => {
+        let searchOptions = { location: `${options.lat},${options.lng}`,  type: 'establishment' };
+        if(options.radius) {
+            searchOptions.radius = options.radius;
+        } else {
+            searchOptions.rankby = 'distance'
+        }
+        return googleMapsClient.placesNearby(searchOptions).asPromise();
     }
 }

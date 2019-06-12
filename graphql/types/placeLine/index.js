@@ -7,5 +7,6 @@ export default `
   type Query {
     placeLines: [PlaceLine]
     placeLine(placeId: String!): PlaceLine
+    placeLinesRadius(lat: String, lng: String, radius: Int): [PlaceLine]
   }
 `;

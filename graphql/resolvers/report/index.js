@@ -49,10 +49,9 @@ export default {
     addReportLocation: async (root, { uid, lat, lng }) => {
       return new Promise(async (resolve, reject) => {
         try {
-          let places = (await maps.searchPlaces(lat, lng)).json.results;
-          if (places.length === 0) {
-            reject("Zero Results")
-          }
+          let places = (await maps.searchPlaces({lat, lng})).json.results;
+          if (places.length === 0) 
+            return reject("Zero Results")
           let place = places[0];
           const newReport = new Report({ uid, name: place.name, placeId: place.place_id });
           Report.findOneAndDelete({ uid }, (err, res) => {

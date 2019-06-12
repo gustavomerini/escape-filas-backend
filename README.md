@@ -31,3 +31,7 @@ Há duas formas de enviar o report de fila
 ### Coletar fila agrupada por report
 `{ "query": "{ placeLine(placeId: \"Id do lugar\") { placeId quantity placeName } }" }
 `
+
+### Coletar filas agrupadas por report com base na 'lat', 'lng' e 'radius'
+`{ "query" : "{ placeLinesRadius(lat:\"-26.9035332\", lng:\"-49.0874129\", radius:50) { placeId quantity placeName } }"}
+`

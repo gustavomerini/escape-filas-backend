@@ -1,7 +1,8 @@
 import googleMaps from '@google/maps';
+require('dotenv').config()
 
 const googleMapsClient = googleMaps.createClient({
-    key: 'AIzaSyCF-4HJEeg4K0KJOEdMuqc5XiQkfM31M10',
+    key: process.env.GOOGLE_MAPS_API_KEY,
     Promise: Promise
 });
 

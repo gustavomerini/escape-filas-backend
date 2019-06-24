@@ -1,5 +1,16 @@
 # escape-filas-backend
 
+### Para rodar a aplicação
+
+`npm install`
+
+#### Arquivo `.env`
+Crie um arquivo `.env` com a seguinte especificação:
+
+```
+GOOGLE_MAPS_API_KEY=CHAVE_AQUI
+```
+
 ### Definições para uso do graphql
 
 * Para utilizar o graphql deve usar sempre o endpoint /graphql;
